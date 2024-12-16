@@ -1,0 +1,8 @@
+/node_modules/*
+!/node_modules/@sudoku
+/dist/
+
+.DS_Store
+.idea
+tailwind-full.config.js
+pnpm-lock.yaml
