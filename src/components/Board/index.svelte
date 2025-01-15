@@ -27,6 +27,17 @@
 
 		return gridStore[cursorStore.y][cursorStore.x];
 	}
+
+    function HintSource(cursorStore, x, y){ // 显示提示值来源
+        if(cursorStore.x===null || cursorStore.y===null || $grid[y][x] === 0)
+            return false;
+        if(!$candidates.hasOwnProperty(cursorStore.y + ',' + cursorStore.x) || $candidates[cursorStore.y + ',' + cursorStore.x].length === 1) 
+            return false;
+
+        return isSameArea(cursorStore, x, y);
+    }
+
+
 </script>
 
 <div class="board-padding relative z-10">
@@ -36,19 +47,20 @@
 	<div class="board-padding absolute inset-0 flex justify-center">
 
 		<div class="bg-white shadow-2xl rounded-xl overflow-hidden w-full h-full max-w-xl grid" class:bg-gray-200={$gamePaused}>
-
+            <!--  candidates={$candidates[y + ',' + x]}    不能够写成x在前面 -->
 			{#each $userGrid as row, y}
 				{#each row as value, x}
 					<Cell {value}
 					      cellY={y + 1}
 					      cellX={x + 1}
-					      candidates={$candidates[x + ',' + y]}
+					      candidates={$candidates[y + ',' + x]}     
 					      disabled={$gamePaused}
 					      selected={isSelected($cursor, x, y)}
 					      userNumber={$grid[y][x] === 0}
 					      sameArea={$settings.highlightCells && !isSelected($cursor, x, y) && isSameArea($cursor, x, y)}
 					      sameNumber={$settings.highlightSame && value && !isSelected($cursor, x, y) && getValueAtCursor($userGrid, $cursor) === value}
-					      conflictingNumber={$settings.highlightConflicting && $grid[y][x] === 0 && $invalidCells.includes(x + ',' + y)} />
+					      conflictingNumber={$settings.highlightConflicting && $grid[y][x] === 0 && $invalidCells.includes(x + ',' + y)}
+                          referenceNumber={HintSource($cursor, x, y)} />
 				{/each}
 			{/each}
 

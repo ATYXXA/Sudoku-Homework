@@ -6,21 +6,25 @@
 
 	// TODO: Improve keyboardDisabled
 	import { keyboardDisabled } from '@sudoku/stores/keyboard';
+    import { hints } from '@sudoku/stores/hints';
 
 	function handleKeyButton(num) {
 		if (!$keyboardDisabled) {
-			if ($notes) {
+            console.log("$cursor: ", $cursor);
+			if ($notes) {   
+                let pos = {x: $cursor.y, y: $cursor.x}; // 行列
 				if (num === 0) {
-					candidates.clear($cursor);
+					candidates.clear(pos);
 				} else {
-					candidates.add($cursor, num);
+					candidates.add(pos, num);
 				}
 				userGrid.set($cursor, 0);
 			} else {
-				if ($candidates.hasOwnProperty($cursor.x + ',' + $cursor.y)) {
-					candidates.clear($cursor);
-				}
-
+				// if ($candidates.hasOwnProperty($cursor.y + ',' + $cursor.x)) {  // 修改行列位置
+				// 	candidates.clear($cursor);
+				// }
+                candidates.clear();
+                hints.reset();
 				userGrid.set($cursor, num);
 			}
 		}

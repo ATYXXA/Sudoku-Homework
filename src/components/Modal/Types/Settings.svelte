@@ -14,8 +14,11 @@
 	function handleSave() {
 		settings.hintsLimited = hintsLimited;
 
-		if (settings.hints < 0) settings.hints = 0;
+		if (settings.hints < 1) settings.hints = 1;
 		if (settings.hints > MAX_HINTS) settings.hints = MAX_HINTS;
+
+        // console.log("settings.hints2: ", settings.hints);
+        // console.log("settingsStore: ", settingsStore.gethints());
 
 		settingsStore.set(settings);
 		hideModal();
@@ -38,14 +41,13 @@
 	<!--<Switch bind:checked={settings.darkTheme} text="Enable dark theme" id="dark-theme" />-->
 	<Switch bind:checked={settings.displayTimer} text="Display timer while playing" id="display-timer" />
 
-	<Switch bind:checked={hintsLimited} text="Limit the number of hints available" id="hints-limited" />
-	{#if hintsLimited}
-		<div transition:slide class="inline-flex items-center">
-			<label for="hints" class="flex-grow text-lg">Number of available hints</label>
-
-			<input bind:value={settings.hints} class="number-input" id="hints" name="hints" type="number" min="0" max="81" />
-		</div>
-	{/if}
+	<!-- <Switch bind:checked={hintsLimited} text="Limit the number of hints available" id="hints-limited" /> -->
+	<!-- {#if hintsLimited} -->
+    <div transition:slide class="inline-flex items-center">
+        <label for="hints" class="flex-grow text-lg">Number of level of hints</label>
+        <input bind:value={settings.hints} class="number-input" id="hints" name="hints" type="number" min="1" max="3" />
+    </div>
+	<!-- {/if} -->
 
 	<Switch bind:checked={settings.highlightCells} text="Highlight cells in same row/column/box" id="highlight-cells" />
 	<Switch bind:checked={settings.highlightSame} text="Highlight cells with the same number" id="highlight-matching" />
