@@ -3,6 +3,7 @@
 	import { startNew, startCustom } from '@sudoku/game';
 	import { validateSencode, encodeSudoku } from '@sudoku/sencode';
 	import { DIFFICULTIES } from '@sudoku/constants';
+	import { userGrid  } from '@sudoku/stores/grid';
 
 	export let data = {};
 	export let hideModal;
@@ -10,64 +11,21 @@
 	let difficulty = $difficultyStore;
 	let sencode = data.sencode || '';
 
-	function extractSudokuFromUrl(input) {
-		// Try to extract the bd parameter from URL
-		try {
-			if (input.includes('?bd=')) {
-				const url = new URL(input);
-				const bd = url.searchParams.get('bd');
-				if (bd) return bd;
-			}
-			// If input is just the numbers string
-			if (/^[0-9]{81}$/.test(input)) {
-				return input;
-			}
-		} catch (e) {
-			// If URL parsing fails, check if the input itself is valid
-			if (/^[0-9]{81}$/.test(input)) {
-				return input;
-			}
-		}
-		return input;
-	}
-
-	function isValid81DigitString(str) {
-		return /^[0-9]{81}$/.test(str);
-	}
-
-	$: {
-		if (sencode) {
-			sencode = extractSudokuFromUrl(sencode);
-		}
-	}
-
 	$: enteredSencode = sencode.trim().length !== 0;
-	$: buttonDisabled = enteredSencode ? 
-		!(validateSencode(sencode) || isValid81DigitString(sencode)) : 
-		!DIFFICULTIES.hasOwnProperty(difficulty);
-
+	$: buttonDisabled = enteredSencode ? !validateSencode(sencode) : !DIFFICULTIES.hasOwnProperty(difficulty);
+	//开始游戏 ，选择难度或输入sencode，sencode来自于游戏内生成的链接
 	function handleStart() {
-		let sudokuString = extractSudokuFromUrl(sencode);
-		
-		if (validateSencode(sudokuString)) {
-			startCustom(sudokuString);
-		} else if (isValid81DigitString(sudokuString)) {
-			// Convert the 81-digit string to sencode format
-			let grid = [];
-			for (let i = 0; i < 9; i++) {
-				let row = [];
-				for (let j = 0; j < 9; j++) {
-					row.push(parseInt(sudokuString[i * 9 + j]));
-				}
-				grid.push(row);
-			}
-			startCustom(encodeSudoku(grid));
+		if (validateSencode(sencode)) {
+			startCustom(sencode);
 		} else {
 			startNew(difficulty);
 		}
 
 		hideModal();
+		localStorage.setItem('userGrid', JSON.stringify($userGrid));
 	}
+	
+	
 </script>
 
 <h1 class="text-3xl font-semibold mb-6 leading-none">Welcome!</h1>

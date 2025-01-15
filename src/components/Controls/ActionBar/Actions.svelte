@@ -7,7 +7,7 @@
 	import { settings } from '@sudoku/stores/settings';
 	import { keyboardDisabled } from '@sudoku/stores/keyboard';
 	import { gamePaused } from '@sudoku/stores/game';
-	import { canUndo, canRedo } from '@sudoku/stores/history';
+	import { canUndo, canRedo, canRecall , recall_times } from '@sudoku/stores/history';
 
 	$: hintsAvailable = true;   // 提示应始终可用
 
@@ -28,9 +28,24 @@
 			userGrid.redo();
 		}
 	}
+
+	function handleRecall() {
+		if (!$gamePaused && $canRecall) {
+			userGrid.recall();
+			userGrid.check_can_recall();
+		}
+	}
+
 </script>
 
 <div class="action-buttons space-x-3">
+
+		<!--<button class="btn btn-round" on:click={handleReCallGame} disabled={!$gameRecall} title="Recall"> TODO：回溯-->
+			<button class="btn btn-round" disabled={$gamePaused || !$canRecall} on:click={handleRecall} title="Recall">
+		<svg class="icon-outline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a10 10 0 1 1 -2 4 m2 -4 l6 2m-6-2l2 -6" />
+		</svg>
+	</button>
 
 	<button class="btn btn-round" disabled={$gamePaused || !$canUndo} on:click={handleUndo} title="Undo">
 		<svg class="icon-outline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
