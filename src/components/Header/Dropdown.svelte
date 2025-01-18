@@ -5,6 +5,8 @@
 	import { slide, fade } from 'svelte/transition';
 	import { DIFFICULTIES, DROPDOWN_DURATION, DIFFICULTY_CUSTOM } from '@sudoku/constants';
 	import { difficulty } from '@sudoku/stores/difficulty';
+	// sudoku 库的solveSudoku函数
+    import { solveSudoku } from '@sudoku/sudoku';
 
 	let dropdownVisible = false;
 
@@ -55,13 +57,13 @@
 		});
 	}
 
-	// 新添加的函数，用于处理策略解题
+	// 新添加的函数，用于处理策略解题，这里应该要有策略名称参数，参数为空则默认策略
     function handleStrategySolve() {
         dropdownVisible = false;
         game.pause();
 
-        // 假设有一个 solveWithStrategy 方法用于策略解题
-        solveWithStrategy();
+		  // 用于策略解题
+        // solveSudoku();
 
         // 可以根据需要添加更多逻辑，例如显示提示信息等
         modal.show('confirm', {
