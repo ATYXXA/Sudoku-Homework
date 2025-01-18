@@ -55,6 +55,27 @@
 		});
 	}
 
+	// 新添加的函数，用于处理策略解题
+    function handleStrategySolve() {
+        dropdownVisible = false;
+        game.pause();
+
+        // 假设有一个 solveWithStrategy 方法用于策略解题
+        solveWithStrategy();
+
+        // 可以根据需要添加更多逻辑，例如显示提示信息等
+        modal.show('confirm', {
+            title: 'Strategy Solve',
+            text: 'Using strategy to solve the Sudoku puzzle.',
+            button: 'OK',
+            onHide: game.resume
+        });
+    }
+
+	
+	
+
+
 	function showDropdown() {
 		dropdownVisible = true;
 		game.pause();
@@ -106,6 +127,16 @@
 
 				<span class="align-middle">Enter Code</span>
 			</a>
+
+			<!-- 策略 -->
+            <a class="dropdown-item" on:click|preventDefault={handleStrategySolve} href="/strategy-solve" title="Use strategy to solve the Sudoku puzzle">
+                <svg class="icon-solid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <!-- 这里可以添加一个合适的 SVG 图标 -->
+                    <path d="M10 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16zm0 14a6 6 0 1 1 0-12 6 6 0 0 1 0 12z" />
+                </svg>
+
+                <span class="align-middle">Strategy</span>
+            </a>
 		</div>
 	{/if}
 </div>
