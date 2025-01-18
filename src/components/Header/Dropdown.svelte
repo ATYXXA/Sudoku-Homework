@@ -3,8 +3,9 @@
 	import { validateSencode } from '@sudoku/sencode';
 	import { modal } from '@sudoku/stores/modal';
 	import { slide, fade } from 'svelte/transition';
-	import { DIFFICULTIES, DROPDOWN_DURATION, DIFFICULTY_CUSTOM } from '@sudoku/constants';
+	import { DIFFICULTIES, DROPDOWN_DURATION, DIFFICULTY_CUSTOM, STRATEGIES } from '@sudoku/constants';
 	import { difficulty } from '@sudoku/stores/difficulty';
+	// import { strategy } from '@sudoku/strategies'
 
 	let dropdownVisible = false;
 
@@ -55,6 +56,22 @@
 		});
 	}
 
+    function handleStrategy(strategyValue) {
+        dropdownVisible = false;
+        game.pause();
+
+        modal.show('confirm', {
+            title: 'Strategy Selected',
+            text: 'You have selected the strategy: ' + strategyValue,
+            button: 'OK',
+            onHide: game.resume,
+			callback: () => {
+				// 设置相应的策略
+                // strategy.set(strategyValue);
+			},
+        });
+    }
+
 	function showDropdown() {
 		dropdownVisible = true;
 		game.pause();
@@ -88,6 +105,18 @@
 					<span class="align-middle">{difficultyLabel}</span>
 				</a>
 			{/each}
+
+			<hr class="my-1">
+
+			{#each Object.entries(STRATEGIES) as [strategyValue, strategyLabel]}
+			<a class="dropdown-item" on:click|preventDefault={() => handleStrategy(strategyValue)} href="/strategy-{strategyValue}" title="Set strategy to '{strategyLabel}'">
+				<svg class="icon-solid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+					<path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+				</svg>
+
+				<span class="align-middle">{strategyLabel}</span>
+			</a>
+		    {/each}
 
 			<hr class="my-1">
 
