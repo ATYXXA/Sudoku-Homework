@@ -36,18 +36,29 @@
 		}
 	}
 
-		// 撤销策略执行按钮
-	// 	function handleSolveStrategy() {
-	// 		if (!$gamePaused) {
-	// 			userGrid.applyStrategy();
-	// 	}
-		
+	// function handleSolveStrategy() {
+    //     if (!$gamePaused) {
+    //         userGrid.applyStrategy();
+    //         // 假设 applyStrategy 方法会更新 strategyValue
+    //         strategyValue = userGrid.getStrategy();
+    //         // 更新显示的内容
+    //         updateStrategyDisplay(strategyValue);
+    //     }
+    // }
+
+    // function updateStrategyDisplay(value) {
+    //     const displayElement = document.getElementById('strategy-display');
+    //     if (displayElement) {
+    //         displayElement.textContent = `当前使用的策略：${value}`;
+    //     }
     // }
 
 
 </script>
 
 <div class="action-buttons space-x-3">
+
+
 
 		<!--<button class="btn btn-round" on:click={handleReCallGame} disabled={!$gameRecall} title="Recall"> TODO：回溯-->
 			<button class="btn btn-round" disabled={$gamePaused || !$canRecall} on:click={handleRecall} title="Recall">
@@ -93,7 +104,7 @@
 	</button> -->
 
 </div>
-
+<!-- <div id="strategy-display"></div> -->
 
 <style>
 	.action-buttons {
