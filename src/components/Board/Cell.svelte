@@ -18,6 +18,7 @@
 	export let sameArea;
 	export let sameNumber;
     export let referenceNumber;
+	export let strategySolveNumber;
 
 	const borderRight = (cellX !== SUDOKU_SIZE && cellX % 3 !== 0);
 	const borderRightBold = (cellX !== SUDOKU_SIZE && cellX % 3 === 0);
@@ -46,6 +47,7 @@
 		<div class="cell-inner"
 		     class:user-number={userNumber}
 		     class:selected={selected}
+			 class:strategy-solve-number={strategySolveNumber}
 		     class:same-area={sameArea}
 		     class:same-number={sameNumber}
 		     class:conflicting-number={conflictingNumber}
@@ -125,6 +127,10 @@
 
 	.selected {
 		@apply bg-primary text-white;
+	}
+
+	.strategy-solve-number {
+		@apply bg-green-600 text-white;
 	}
 
 	.same-area {
