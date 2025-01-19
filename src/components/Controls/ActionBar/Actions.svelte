@@ -36,13 +36,13 @@
 		}
 	}
 
-		// 新添加的函数，用于处理策略解题，这里应该要有策略名称参数，参数为空则默认策略
-		function handleSolveStrategy() {
-			if (!$gamePaused) {
-				userGrid.applyStrategy();
-		}
+		// 撤销策略执行按钮
+	// 	function handleSolveStrategy() {
+	// 		if (!$gamePaused) {
+	// 			userGrid.applyStrategy();
+	// 	}
 		
-    }
+    // }
 
 
 </script>
@@ -76,11 +76,11 @@
 	{/if}
 </button>
 
-	<button class="btn btn-round" disabled={$gamePaused} on:click={handleSolveStrategy} title="Solve Strategy">
+	<!-- <button class="btn btn-round" disabled={$gamePaused} on:click={handleSolveStrategy} title="Solve Strategy">
 			<svg class="icon-outline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2L2 7l10 5 10-5-10-5z" />
 			</svg>
-	</button>
+	</button> -->
 
 
     <!-- 这里不需要note功能 -->
